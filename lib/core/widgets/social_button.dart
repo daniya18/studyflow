@@ -20,10 +20,6 @@ class SocialButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
-          backgroundColor: Colors.white.withOpacity(0.06),
-          side: BorderSide(
-            color: Colors.white.withOpacity(0.15),
-          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
           ),
@@ -32,13 +28,11 @@ class SocialButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             icon,
-            const SizedBox(width: 12),
-            Text(
-              text,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
+            const SizedBox(width: 10),
+            Flexible(
+              child: Text(
+                text,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],

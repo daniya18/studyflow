@@ -229,24 +229,31 @@ class _LoginScreenState extends State<LoginScreen>
             ),
 
             const SizedBox(height: 18),
-            Row(
+            Wrap(
+  alignment: WrapAlignment.spaceBetween,
+  crossAxisAlignment: WrapCrossAlignment.center,
+  runSpacing: 8,
   children: [
-    Checkbox(
-      value: rememberMe,
-      activeColor: AppColors.primary,
-      onChanged: (value) {
-        setState(() {
-          rememberMe = value ?? false;
-        });
-      },
+    Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Checkbox(
+          value: rememberMe,
+          activeColor: AppColors.primary,
+          onChanged: (value) {
+            setState(() {
+              rememberMe = value ?? false;
+            });
+          },
+        ),
+        const Text(
+          "Remember Me",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ],
     ),
-    const Text(
-      "Remember Me",
-      style: TextStyle(
-        color: Colors.white,
-      ),
-    ),
-    const Spacer(),
     TextButton(
       onPressed: () {
         Navigator.push(

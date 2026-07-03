@@ -8,11 +8,14 @@ class SignupScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Create Account"),
+        centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          "Signup Screen",
-          style: TextStyle(fontSize: 22),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text("Back to Login"),
         ),
       ),
     );
