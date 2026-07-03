@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../features/splash/splash_screen.dart';
+import '../features/auth/login_screen.dart';
 
 class StudyFlowApp extends StatelessWidget {
   const StudyFlowApp({super.key});
@@ -9,7 +9,7 @@ class StudyFlowApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'StudyFlow',
-      home: const SplashScreen(),
+      home: const LoginScreen(),
     );
   }
 }
