@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+import '../auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'page_one.dart';
 import 'page_two.dart';
@@ -42,9 +44,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Align(
                 alignment: Alignment.topRight,
                 child: TextButton(
-                  onPressed: () {
-                    // TODO: Navigate to Login
-                  },
+                  onPressed: () async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setBool("first_time", false);
+
+  if (!context.mounted) return;
+
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const LoginScreen(),
+    ),
+  );
+},
                   child: const Text(
                     "Skip",
                     style: TextStyle(
@@ -102,16 +114,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         borderRadius: BorderRadius.circular(18),
                       ),
                     ),
-                    onPressed: () {
-                      if (currentPage == 2) {
-                        // TODO: Navigate to Login
-                      } else {
-                        _pageController.nextPage(
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInOut,
-                        );
-                      }
-                    },
+                    onPressed: () async {
+  if (currentPage == 2) {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setBool("first_time", false);
+
+    if (!context.mounted) return;
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const LoginScreen(),
+      ),
+    );
+  } else {
+    _pageController.nextPage(
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
+},
                     child: Text(
                       currentPage == 2
                           ? "Get Started"

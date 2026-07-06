@@ -421,11 +421,11 @@ const SizedBox(height: 25),
                                     ),
                                   );
                                 },
-                                icon: const Icon(
-                                  Icons.g_mobiledata,
-                                  size: 32,
-                                  color: Colors.white,
-                                ),
+                                icon: Image.asset(
+  "assets/images/google_logo.png",
+  width: 26,
+  height: 26,
+),
                                 label: const Text(
                                   "Continue with Google",
                                   style: TextStyle(

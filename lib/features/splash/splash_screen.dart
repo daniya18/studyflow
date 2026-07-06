@@ -1,7 +1,11 @@
+import 'package:shared_preferences/shared_preferences.dart';
+import '../auth/login_screen.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../painters/premium_ring_painter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../dashboard/dashboard_screen.dart';
 import '../onboarding/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -24,16 +28,41 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 8),
     )..repeat();
 
-    Timer(const Duration(seconds: 3), () {
-      if (!mounted) return;
+   Timer(const Duration(seconds: 3), () async {
+  final prefs = await SharedPreferences.getInstance();
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const OnboardingScreen(),
-        ),
-      );
-    });
+  bool firstTime = prefs.getBool("first_time") ?? true;
+
+  if (!mounted) return;
+
+  if (firstTime) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const OnboardingScreen(),
+      ),
+    );
+  } else {
+  final rememberMe = prefs.getBool("rememberMe") ?? false;
+  final user = FirebaseAuth.instance.currentUser;
+
+  if (rememberMe && user != null) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const DashboardScreen(),
+      ),
+    );
+  } else {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const LoginScreen(),
+      ),
+    );
+  }
+}
+});
   }
 
   @override

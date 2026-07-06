@@ -4,19 +4,23 @@ class PremiumTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hint;
   final IconData icon;
+  final String? prefixText;
+final Widget? prefix;
   final bool isPassword;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
 
   const PremiumTextField({
-    super.key,
-    required this.controller,
-    required this.hint,
-    required this.icon,
-    this.isPassword = false,
-    this.keyboardType = TextInputType.text,
-    this.validator,
-  });
+  super.key,
+  required this.controller,
+  required this.hint,
+  required this.icon,
+  this.isPassword = false,
+  this.keyboardType = TextInputType.text,
+  this.validator,
+  this.prefixText,
+  this.prefix,
+});
 
   @override
   State<PremiumTextField> createState() => _PremiumTextFieldState();
@@ -68,10 +72,17 @@ class _PremiumTextFieldState extends State<PremiumTextField> {
             hintStyle: const TextStyle(
               color: Colors.white54,
             ),
-            prefixIcon: Icon(
-              widget.icon,
-              color: Colors.white70,
-            ),
+            prefixIcon: widget.prefix ??
+    Icon(
+      widget.icon,
+      color: Colors.white70,
+    ),
+
+prefixText: widget.prefixText,
+prefixStyle: const TextStyle(
+  color: Colors.white,
+  fontWeight: FontWeight.w600,
+),
             suffixIcon: widget.isPassword
                 ? IconButton(
                     icon: Icon(
