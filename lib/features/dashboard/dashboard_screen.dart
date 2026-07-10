@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:studyflow/models/course_model.dart';
+import 'package:studyflow/core/services/course_service.dart';
+import '../courses/courses_screen.dart';
+import 'widgets/featured_course_card.dart';
+import 'widgets/continue_learning_card.dart';
+import 'widgets/recent_lessons_card.dart';
+import 'widgets/study_progress_card.dart';
 import '../../core/services/firestore_service.dart';
 import '../../models/user_model.dart';
 
@@ -114,7 +120,62 @@ class DashboardScreen extends StatelessWidget {
 
       const QuickActionsCard(),
 
-      const SizedBox(height: 30),
+const SizedBox(height: 30),
+
+const Text(
+  "Featured Course",
+  style: TextStyle(
+    color: Colors.white,
+    fontSize: 22,
+    fontWeight: FontWeight.bold,
+  ),
+),
+
+const SizedBox(height: 16),
+
+StreamBuilder<CourseModel?>(
+  stream: CourseService.instance.getFeaturedCourse(),
+  builder: (context, snapshot) {
+    if (!snapshot.hasData) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    final course = snapshot.data!;
+
+    return FeaturedCourseCard(
+      course: course,
+    );
+  },
+),
+
+const SizedBox(height: 30),
+
+const Text(
+  "Continue Learning",
+  style: TextStyle(
+    color: Colors.white,
+    fontSize: 22,
+    fontWeight: FontWeight.bold,
+  ),
+),
+
+const SizedBox(height: 16),
+
+
+
+const SizedBox(height: 24),
+
+
+const SizedBox(height: 24),
+
+const RecentLessonsCard(
+  title: "Flutter Widgets Deep Dive",
+  duration: "18 min",
+),
+
+const SizedBox(height: 30),
 
       SizedBox(
         width: double.infinity,
@@ -175,13 +236,14 @@ class DashboardScreen extends StatelessWidget {
             case 0:
               break;
 
-            case 1:
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Courses coming soon"),
-                ),
-              );
-              break;
+         case 1:
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const CoursesScreen(),
+    ),
+  );
+  break;
 
             case 2:
               ScaffoldMessenger.of(context).showSnackBar(
